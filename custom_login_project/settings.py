@@ -10,9 +10,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'z0hLgFQyXwO8jvX6')
 
 # SECURITY WARNING: Don't run with debug turned on in production!
 DEBUG = 'True'
-CSRF_TRUSTED_ORIGINS = [
-    "https://web-production-bab0.up.railway.app"
-]
+
 # Railway asignará automáticamente la URL de tu aplicación
 ALLOWED_HOSTS = ['web-production-bab0.up.railway.app']
 
@@ -88,7 +86,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 
 # CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
-    'https://11f2-2806-261-5480-142e-c577-6abc-32ae-bbc1.ngrok-free.app',
+    "https://web-production-bab0.up.railway.app",
 ]
 
 # Default primary key field type
