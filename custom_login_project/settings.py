@@ -12,7 +12,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'z0hLgFQyXwO8jvX6')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 # Railway asignará automáticamente la URL de tu aplicación
-ALLOWED_HOSTS = ['.railway.app']
+ALLOWED_HOSTS = ['web-production-bab0.up.railway.app']
 
 # Application definition
 INSTALLED_APPS = [
