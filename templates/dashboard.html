@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5">
+    <!-- Mensaje de bienvenida -->
+    <div class="text-center">
+        <h1 class="fw-bold text-primary">Bienvenido, {{ user.area }}</h1>
+        <p class="text-muted">Explora todas las opciones disponibles para ti.</p>
+    </div>
+
+    <!-- Sección de accesos rápidos con iconos y tarjetas mejoradas -->
+    <div class="row mt-4 g-4">
+        
+        {% if user.area == "Coordinación" %}
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-people fs-1 text-primary"></i>
+                    <h5 class="card-title mt-2">Gestión de Usuarios</h5>
+                    <p class="card-text">Administra y registra los usuarios.</p>
+                    <a href="{% url 'register' %}" class="btn btn-outline-primary">Acceder</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-file-earmark-text fs-1 text-success"></i>
+                    <h5 class="card-title mt-2">Solicitudes</h5>
+                    <p class="card-text">Genera y revisa solicitudes de espacios.</p>
+                    <a href="{% url 'lista_solicitudes' %}" class="btn btn-outline-success">Ver Solicitudes</a>
+                </div>
+            </div>
+        </div>
+
+        {% if user.area == "Coordinación" %}
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-building fs-1 text-warning"></i>
+                    <h5 class="card-title mt-2">Espacios Físicos</h5>
+                    <p class="card-text">Administra y registra los Espacios Físicos.</p>
+                    <a href="{% url 'lista_espacios' %}" class="btn btn-outline-warning">Ver Espacios</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.area == "Coordinación" %}
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-person-lines-fill fs-1 text-info"></i>
+                    <h5 class="card-title mt-2">Usuarios Registrados</h5>
+                    <p class="card-text">Consulta la lista de usuarios del sistema.</p>
+                    <a href="{% url 'lista_usuarios' %}" class="btn btn-outline-info">Ver Usuarios</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Botón para cambiar contraseña -->
+    <div class="text-center mt-4">
+        <a href="{% url 'cambiar_contraseña' %}" class="btn btn-danger">
+            <i class="bi bi-lock-fill"></i> Cambiar Contraseña
+        </a>
+    </div>
+</div>
+
+{% endblock %}

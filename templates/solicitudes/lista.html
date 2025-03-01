@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Solicitudes{% endblock %}
+
+{% block content %}
+    <h1>Solicitudes de Espacios</h1>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'agregar_solicitud' %}" class="btn btn-success bi bi-plus-circle"> Agregar Solicitud</a>
+       <a href="#" style=" padding-left: 10px; padding-right: 10px;" ></a>
+
+        <a href="{% url 'calendario_solicitudes' %}" class="btn btn-secondary bi bi-calendar "> Calendario</a>
+    </div>
+
+    <table id="solicitudes-table" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Folio</th>
+            <th>Nombre</th>
+            <th>Área</th>
+            <th>Fecha</th>
+            <th>Espacio</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for solicitud in solicitudes %}
+            <tr>
+                <td>{{ solicitud.folio }}</td>
+                <td>{{ solicitud.nombre }}</td>
+                <td>{{ solicitud.area }}</td>
+                <td>{{ solicitud.fecha }}</td>
+                <td>{{ solicitud.espacio_prestamo }}</td>
+                <td>{{ solicitud.get_estado_display }}</td>
+                <td>
+                    {% if user.area == "Coordinación" and solicitud.estado == 1 %}
+                        <a href="{% url 'editar_solicitud' solicitud.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm eliminar-btn" data-url="{% url 'eliminar_solicitud' solicitud.pk %}">Eliminar</a>
+                    {% elif user.area == "Delegación Administrativa" and solicitud.estado == 2 %}
+                        <a href="{% url 'editar_solicitud' solicitud.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm eliminar-btn" data-url="{% url 'eliminar_solicitud' solicitud.pk %}">Eliminar</a>
+                    {% elif user.area != "Coordinación" and user.area != "Delegación Administrativa" and solicitud.estado == 1 %}
+                        <a href="{% url 'editar_solicitud' solicitud.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm eliminar-btn" data-url="{% url 'eliminar_solicitud' solicitud.pk %}">Eliminar</a>
+                    {% endif %}
+                    <a href="{% url 'detalle_solicitud' solicitud.pk %}" class="bi bi-eye btn btn-dark btn-sm"> Detalles</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Estilos y scripts de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#solicitudes-table').DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-MX.json"
+                },
+                order: [[3, 'desc']], // Orden por defecto en la fecha
+                pageLength: 10, // Número de registros por página
+                lengthMenu: [5, 10, 25, 50], // Opciones para cambiar la cantidad de registros por página
+            });
+        });
+
+        $(document).on('click', '.eliminar-btn', function(event) {
+            event.preventDefault();
+            let url = $(this).data('url');
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'No podrás revertir esta acción.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    </script>
+{% endblock %}
