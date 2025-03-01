@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'z0hLgFQyXwO8jvX6')
 
 # SECURITY WARNING: Don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = 'True'
 
 # Railway asignará automáticamente la URL de tu aplicación
 ALLOWED_HOSTS = ['web-production-bab0.up.railway.app']
